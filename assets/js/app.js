@@ -1102,6 +1102,19 @@
     audio.volume = 0.30;
     slider.value = 30;
 
+    // Handle audio loading errors (e.g. 404 on Vercel for the large techhouse mp3)
+    audio.addEventListener('error', (e) => {
+      console.warn("Audio loading error, trying fallback...", e);
+      const currentSrc = audio.currentSrc || '';
+      if (currentSrc.includes('speakeasy-techhouse.mp3')) {
+        audio.src = 'assets/audio/speakeasy-lofi.mp3?v=5.3';
+        audio.load();
+        if (document.body.classList.contains('speakeasy-active') || !audio.paused) {
+          startPlayback();
+        }
+      }
+    }, true); // useCapture because error events on <source> don't bubble
+
     const startPlayback = () => {
       return audio.play().then(() => {
         btnPlay.textContent = '⏸';
