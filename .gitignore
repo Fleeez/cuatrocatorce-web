@@ -12,3 +12,6 @@ npm-debug.log*
 
 # Node (por si acaso)
 node_modules/
+
+# Large audio (host externally)
+assets/audio/speakeasy-techhouse.mp3
