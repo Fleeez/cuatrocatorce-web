@@ -1098,16 +1098,16 @@
     const btnSpeakeasy = $('btn-speakeasy-toggle');
     if (!audio || !btnPlay || !btnMute || !slider || !disk) return;
 
-    let prevVolume = 30;
-    audio.volume = 0.30;
-    slider.value = 30;
+    let prevVolume = 25;
+    audio.volume = 0.25;
+    slider.value = 25;
 
     // Handle audio loading errors (e.g. 404 on Vercel for the large techhouse mp3)
     audio.addEventListener('error', (e) => {
       console.warn("Audio loading error, trying fallback...", e);
       const currentSrc = audio.currentSrc || '';
       if (currentSrc.includes('speakeasy-techhouse.mp3')) {
-        audio.src = 'assets/audio/speakeasy-lofi.mp3?v=5.3';
+        audio.src = 'assets/audio/speakeasy-lofi.mp3?v=5.4';
         audio.load();
         if (document.body.classList.contains('speakeasy-active') || !audio.paused) {
           startPlayback();

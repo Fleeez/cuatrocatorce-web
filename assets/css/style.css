@@ -3497,14 +3497,14 @@ html {
   }
 
   /* Music player */
-  .music-player-widget {
+  .lofi-player-container {
     left: 8px;
     bottom: 80px;
     max-width: calc(100vw - 80px);
   }
 
   /* WhatsApp button */
-  #whatsapp-float {
+  .whatsapp-float {
     bottom: 16px;
     right: 16px;
     width: 52px;
@@ -3545,10 +3545,10 @@ html {
 
 /* — Fix: iOS safe area insets — */
 @supports (padding: max(0px)) {
-  .music-player-widget {
+  .lofi-player-container {
     bottom: max(72px, calc(72px + env(safe-area-inset-bottom)));
   }
-  #whatsapp-float {
+  .whatsapp-float {
     bottom: max(16px, calc(16px + env(safe-area-inset-bottom)));
     right: max(16px, calc(16px + env(safe-area-inset-right)));
   }
