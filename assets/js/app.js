@@ -1107,7 +1107,7 @@
       console.warn("Audio loading error, trying fallback...", e);
       const currentSrc = audio.currentSrc || '';
       if (currentSrc.includes('speakeasy-techhouse.mp3')) {
-        audio.src = 'assets/audio/speakeasy-lofi.mp3?v=5.4';
+        audio.src = 'assets/audio/speakeasy-lofi.mp3?v=5.5';
         audio.load();
         if (document.body.classList.contains('speakeasy-active') || !audio.paused) {
           startPlayback();
