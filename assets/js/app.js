@@ -1088,7 +1088,7 @@
 
   })();
 
-  /* ── 8. Reproductor Speakeasy Lofi ── */
+  /* ── 8. Reproductor Tech House ── */
   (function initLofiPlayer() {
     const audio = $('speakeasy-audio');
     const btnPlay = $('btn-play-pause');
@@ -1098,42 +1098,48 @@
     const btnSpeakeasy = $('btn-speakeasy-toggle');
     if (!audio || !btnPlay || !btnMute || !slider || !disk) return;
 
-    let prevVolume = 50;
-    audio.volume = 0.5;
+    let prevVolume = 30;
+    audio.volume = 0.30;
+    slider.value = 30;
 
-    // Helper to start playback smoothly
     const startPlayback = () => {
-      audio.play().then(() => {
+      return audio.play().then(() => {
         btnPlay.textContent = '⏸';
         disk.classList.add('spinning');
-      }).catch((err) => {
-        console.warn('Playback blocked by browser security. Requires user click.', err);
-      });
+      }).catch(() => {});
     };
 
-    // Helper to pause playback
     const pausePlayback = () => {
       audio.pause();
       btnPlay.textContent = '▶';
       disk.classList.remove('spinning');
     };
 
-    btnPlay.addEventListener('click', () => {
-      if (audio.paused) {
-        startPlayback();
-      } else {
-        pausePlayback();
-      }
+    // Try immediate autoplay (works if user already interacted before)
+    startPlayback();
+
+    // Fallback: start on very first user gesture anywhere on the page
+    const onFirstGesture = () => {
+      if (audio.paused) startPlayback();
+    };
+    ['click','touchstart','scroll','keydown'].forEach(evt =>
+      document.addEventListener(evt, onFirstGesture, { once: true, passive: true })
+    );
+
+    btnPlay.addEventListener('click', (e) => {
+      e.stopPropagation();
+      audio.paused ? startPlayback() : pausePlayback();
     });
 
-    btnMute.addEventListener('click', () => {
+    btnMute.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (audio.muted) {
         audio.muted = false;
         btnMute.textContent = '🔊';
         slider.value = prevVolume;
         audio.volume = prevVolume / 100;
       } else {
-        prevVolume = slider.value;
+        prevVolume = parseInt(slider.value, 10);
         audio.muted = true;
         btnMute.textContent = '🔇';
         slider.value = 0;
@@ -1141,41 +1147,21 @@
       }
     });
 
-    slider.addEventListener('input', () => {
+    slider.addEventListener('input', (e) => {
+      e.stopPropagation();
       const val = parseInt(slider.value, 10);
       audio.volume = val / 100;
-      if (val === 0) {
-        audio.muted = true;
-        btnMute.textContent = '🔇';
-      } else {
-        audio.muted = false;
-        btnMute.textContent = '🔊';
-      }
+      audio.muted = (val === 0);
+      btnMute.textContent = (val === 0) ? '🔇' : '🔊';
     });
 
-    // Speakeasy Mode Toggle Logic
     if (btnSpeakeasy) {
       btnSpeakeasy.addEventListener('click', () => {
         const isActive = document.body.classList.toggle('speakeasy-active');
-        
-        // Play click/switch synthesizer sound
         playSwitchSound(isActive);
-        
-        // Update emoji/text inside player toggle button
         btnSpeakeasy.textContent = isActive ? '⚡' : '🕯️';
         btnSpeakeasy.title = isActive ? 'Modo Speakeasy (Encender luces)' : 'Modo Speakeasy (Apagar luces)';
-        
-        // If activated, auto-start playback
-        if (isActive) {
-          if (audio.paused) {
-            startPlayback();
-          }
-        } else {
-          // If deactivated, pause
-          if (!audio.paused) {
-            pausePlayback();
-          }
-        }
+        if (isActive && audio.paused) { startPlayback(); }
       });
     }
   })();
