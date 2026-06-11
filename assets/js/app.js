@@ -1107,7 +1107,7 @@
       console.warn("Audio loading error, trying fallback...", e);
       const currentSrc = audio.currentSrc || '';
       if (currentSrc.includes('speakeasy-techhouse.mp3')) {
-        audio.src = 'assets/audio/speakeasy-lofi.mp3?v=5.5';
+        audio.src = 'assets/audio/speakeasy-lofi.mp3?v=5.6';
         audio.load();
         if (document.body.classList.contains('speakeasy-active') || !audio.paused) {
           startPlayback();
@@ -1177,6 +1177,66 @@
         if (isActive && audio.paused) { startPlayback(); }
       });
     }
+  })();
+
+
+  /* ── 9. Custom Cursor & Title Hover Effect ── */
+  (function initCustomCursor() {
+    // Only enable if device supports hover
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.display = 'block';
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cursor.style.display = 'none';
+    });
+
+    // Add hover effect on all interactive elements
+    const updateHoverStatus = () => {
+      const clickables = document.querySelectorAll('a, button, input, textarea, select, [role="button"], .clickable, .menu-tab-btn, .mood-btn, .wheel-pointer');
+      clickables.forEach(el => {
+        if (el.dataset.hasCursorListener) return;
+        el.dataset.hasCursorListener = 'true';
+        
+        el.addEventListener('mouseenter', () => {
+          cursor.classList.add('cursor-hover');
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.classList.remove('cursor-hover');
+        });
+      });
+    };
+    
+    updateHoverStatus();
+    setInterval(updateHoverStatus, 1000);
+  })();
+
+  (function initTitleHoverEffect() {
+    const titleEditorial = document.querySelector('.title-editorial');
+    const titleAccent = document.querySelector('.title-accent');
+    
+    const wrapChars = (el) => {
+      if (!el) return;
+      const text = el.textContent.trim();
+      el.innerHTML = '';
+      [...text].forEach(char => {
+        const span = document.createElement('span');
+        span.className = 'hover-char';
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        el.appendChild(span);
+      });
+    };
+
+    wrapChars(titleEditorial);
+    wrapChars(titleAccent);
   })();
 
 })();
