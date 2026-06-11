@@ -3574,11 +3574,9 @@ body, html {
   }
   
   .custom-cursor {
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: 14px solid var(--accent-magenta);
+    width: 12px;
+    height: 14px;
+    color: var(--accent-magenta);
     position: fixed;
     pointer-events: none;
     z-index: 100000;
@@ -3589,11 +3587,11 @@ body, html {
     transform: translate(-50%, 0) rotate(-15deg);
     filter: drop-shadow(0 0 5px var(--accent-magenta));
     will-change: left, top;
-    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.15s ease, filter 0.15s ease;
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), color 0.15s ease, filter 0.15s ease;
   }
   
   .custom-cursor.cursor-hover {
-    border-bottom-color: var(--accent-blue);
+    color: var(--accent-blue);
     filter: drop-shadow(0 0 8px var(--accent-blue));
     transform: translate(-50%, 0) scale(1.4) rotate(35deg);
   }

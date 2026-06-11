@@ -1187,6 +1187,7 @@
 
     const cursor = document.createElement('div');
     cursor.className = 'custom-cursor';
+    cursor.innerHTML = '<svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; width: 100%; height: 100%;"><path d="M6 0L12 14H0L6 0Z" fill="currentColor"/></svg>';
     document.body.appendChild(cursor);
 
     document.addEventListener('mousemove', (e) => {
