@@ -3569,15 +3569,15 @@ body, html {
    Custom Cursor & Title Character Hover Effects
 ----------------------------------------------------------- */
 @media (hover: hover) and (pointer: fine) {
-  html, body, a, button, select, input, textarea, [role="button"], .clickable, .hover-char {
+  html, body, a, button, select, input, textarea, [role="button"], .clickable, .hover-char, .gal-card, .subsection-header, .lb-close, .lb-prev, .lb-next, .drawer-close {
     cursor: none !important;
   }
   
   .custom-cursor {
     width: 0;
     height: 0;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
     border-bottom: 14px solid var(--accent-magenta);
     position: fixed;
     pointer-events: none;
@@ -3585,37 +3585,34 @@ body, html {
     left: 0;
     top: 0;
     display: none;
-    transform: translate(-50%, -50%);
+    transform-origin: center top;
+    transform: translate(-50%, 0) rotate(-15deg);
     filter: drop-shadow(0 0 5px var(--accent-magenta));
     will-change: left, top;
-    transition: transform 0.05s ease-out, border-color 0.15s ease, filter 0.15s ease;
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.15s ease, filter 0.15s ease;
   }
   
   .custom-cursor.cursor-hover {
     border-bottom-color: var(--accent-blue);
     filter: drop-shadow(0 0 8px var(--accent-blue));
-    transform: translate(-50%, -50%) scale(1.4) rotate(45deg);
+    transform: translate(-50%, 0) scale(1.4) rotate(35deg);
+  }
+
+  .title-editorial .hover-char:hover {
+    color: var(--accent-blue) !important;
+    text-shadow: 0 0 15px var(--accent-blue), 0 0 5px #fff !important;
+    transform: translateY(-5px) scale(1.1);
+  }
+
+  .title-accent .hover-char:hover {
+    color: var(--accent-blue) !important;
+    text-shadow: 0 0 20px var(--accent-blue), 0 0 8px #fff !important;
+    transform: translateY(-8px) scale(1.1);
   }
 }
 
-.title-editorial .hover-char {
-  display: inline-block;
-  transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.title-editorial .hover-char:hover {
-  color: var(--accent-blue) !important;
-  text-shadow: 0 0 15px var(--accent-blue), 0 0 5px #fff !important;
-  transform: translateY(-5px) scale(1.1);
-}
-
+.title-editorial .hover-char,
 .title-accent .hover-char {
   display: inline-block;
   transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.title-accent .hover-char:hover {
-  color: var(--accent-blue) !important;
-  text-shadow: 0 0 20px var(--accent-blue), 0 0 8px #fff !important;
-  transform: translateY(-8px) scale(1.1);
 }

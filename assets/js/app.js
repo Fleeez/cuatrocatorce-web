@@ -1201,7 +1201,7 @@
 
     // Add hover effect on all interactive elements
     const updateHoverStatus = () => {
-      const clickables = document.querySelectorAll('a, button, input, textarea, select, [role="button"], .clickable, .menu-tab-btn, .mood-btn, .wheel-pointer');
+      const clickables = document.querySelectorAll('a, button, input, textarea, select, [role="button"], .clickable, .menu-tab-btn, .mood-btn, .wheel-pointer, .gal-card, .subsection-header, .lb-close, .lb-prev, .lb-next, .drawer-close');
       clickables.forEach(el => {
         if (el.dataset.hasCursorListener) return;
         el.dataset.hasCursorListener = 'true';
